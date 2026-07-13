@@ -28,7 +28,7 @@ jobs:
           unzip -q pluginval.zip
 
       - name: Validar VST3 con pluginval
-        run: ./pluginval.app/Contents/MacOS/pluginval --strictness-level 5 --skip-gui-tests --validate build/LaDistorneta_artefacts/VST3/LaDistorneta.vst3
+        run: ./pluginval.app/Contents/MacOS/pluginval --strictness-level 5 --skip-gui-tests --validate build/pkg_stage/Library/Audio/Plug-Ins/VST3/LaDistorneta.vst3
 
       - uses: actions/upload-artifact@v4
         with:
