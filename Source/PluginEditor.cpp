@@ -11,6 +11,15 @@ static std::vector<std::byte> toByteVec (const char* data, int size)
 LaDistornetaAudioProcessorEditor::LaDistornetaAudioProcessorEditor (LaDistornetaAudioProcessor& proc)
     : AudioProcessorEditor (&proc), processor (proc),
       webBrowser (juce::WebBrowserComponent::Options{}
+          // En Windows hay que pedir WebView2 explicitamente: el backend por
+          // defecto es IE11 y ahi la UI no carga ("Se canceló la navegación...").
+          // En macOS esta opcion se ignora (usa WKWebView igual).
+          .withBackend (juce::WebBrowserComponent::Options::Backend::webview2)
+          .withWinWebView2Options (juce::WebBrowserComponent::Options::WinWebView2{}
+              // WebView2 necesita una carpeta escribible para sus datos; sin esto
+              // falla cuando el DAW corre desde Program Files.
+              .withUserDataFolder (juce::File::getSpecialLocation (
+                  juce::File::userApplicationDataDirectory).getChildFile ("LaDistorneta")))
           .withNativeIntegrationEnabled()
           .withNativeFunction ("setParam",
               [&proc] (const juce::Array<juce::var>& args,
