@@ -22,6 +22,14 @@ jobs:
       - name: Compilar y empaquetar (.pkg universal)
         run: ./make_pkg.sh
 
+      - name: Descargar pluginval
+        run: |
+          curl -sL -o pluginval.zip https://github.com/Tracktion/pluginval/releases/latest/download/pluginval_macOS.zip
+          unzip -q pluginval.zip
+
+      - name: Validar VST3 con pluginval
+        run: ./pluginval.app/Contents/MacOS/pluginval --strictness-level 5 --skip-gui-tests --validate build/LaDistorneta_artefacts/VST3/LaDistorneta.vst3
+
       - uses: actions/upload-artifact@v4
         with:
           name: LaDistorneta-macOS
@@ -45,6 +53,16 @@ jobs:
 
       - name: Compilar
         run: cmake --build build --config Release
+
+      - name: Descargar pluginval
+        shell: pwsh
+        run: |
+          Invoke-WebRequest -Uri "https://github.com/Tracktion/pluginval/releases/latest/download/pluginval_Windows.zip" -OutFile pluginval.zip
+          Expand-Archive -Path pluginval.zip -DestinationPath pluginval
+
+      - name: Validar VST3 con pluginval
+        shell: pwsh
+        run: ./pluginval/pluginval.exe --strictness-level 5 --skip-gui-tests --validate build/LaDistorneta_artefacts/Release/VST3/LaDistorneta.vst3
 
       - name: Armar instalador (.exe con Inno Setup, preinstalado en el runner)
         run: iscc installer\LaDistorneta.iss
