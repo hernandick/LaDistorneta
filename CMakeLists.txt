@@ -48,6 +48,9 @@ target_compile_definitions(LaDistorneta
         JUCE_WEB_BROWSER=1
         JUCE_USE_CURL=0
         JUCE_VST3_CAN_REPLACE_VST2=0
+        # Activa el backend WebView2 en Windows; sin esto la API moderna del
+        # WebBrowserComponent (withResourceProvider, etc.) no se compila alla.
+        JUCE_USE_WIN_WEBVIEW2_WITH_STATIC_LINKING=1
 )
 
 target_link_libraries(LaDistorneta
