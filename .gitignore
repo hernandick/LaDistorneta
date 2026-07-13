@@ -1,0 +1,4 @@
+build/
+*.pkg
+.DS_Store
+installer/Output/
