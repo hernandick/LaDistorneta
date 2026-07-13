@@ -7,6 +7,8 @@ cd "$(dirname "$0")"
 
 VERSION="0.0.1"
 ARTEFACTS="build/LaDistorneta_artefacts"
+# En builds con CMAKE_BUILD_TYPE=Release (ej. CI) JUCE agrega un subdirectorio Release/
+[ -d "$ARTEFACTS/Release" ] && ARTEFACTS="$ARTEFACTS/Release"
 STAGE="build/pkg_stage"
 OUT="LaDistorneta-${VERSION}.pkg"
 
