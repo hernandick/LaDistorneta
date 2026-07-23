@@ -5,7 +5,7 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-VERSION="0.0.1"
+VERSION="0.0.2"
 ARTEFACTS="build/LaDistorneta_artefacts"
 # En builds con CMAKE_BUILD_TYPE=Release (ej. CI) JUCE agrega un subdirectorio Release/
 [ -d "$ARTEFACTS/Release" ] && ARTEFACTS="$ARTEFACTS/Release"

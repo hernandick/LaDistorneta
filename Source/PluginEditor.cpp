@@ -78,7 +78,11 @@ void LaDistornetaAudioProcessorEditor::resized()
 std::optional<juce::WebBrowserComponent::Resource>
 LaDistornetaAudioProcessorEditor::getResource (const juce::String& url)
 {
-    if (url == "/" || url == "/index.html")
+    // Normalizamos: algunos hosts (Logic/AU) piden la raiz con query string
+    // o sin la barra final, y la comparacion exacta fallaba -> UI en blanco.
+    auto path = url.upToFirstOccurrenceOf ("?", false, false);
+
+    if (path.isEmpty() || path == "/" || path == "/index.html")
         return juce::WebBrowserComponent::Resource {
             toByteVec (BinaryData::ui_html, BinaryData::ui_htmlSize), "text/html" };
 

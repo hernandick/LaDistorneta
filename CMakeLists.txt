@@ -4,7 +4,12 @@ cmake_minimum_required(VERSION 3.22)
 # (Tiene que definirse ANTES de project() para que tome efecto.)
 set(CMAKE_OSX_ARCHITECTURES "arm64;x86_64" CACHE STRING "" FORCE)
 
-project(LaDistorneta VERSION 0.0.1)
+# Version minima de macOS. SIN esto, el build toma la del SDK de la maquina
+# que compila (ej. macOS 15) y el plugin NO carga en Macs mas viejas
+# (error "OpenAComponent: -1"). 10.13 es el piso que necesita el WebView.
+set(CMAKE_OSX_DEPLOYMENT_TARGET "10.13" CACHE STRING "" FORCE)
+
+project(LaDistorneta VERSION 0.0.2)
 
 set(CMAKE_CXX_STANDARD 17)
 
